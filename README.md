@@ -478,14 +478,15 @@ WHERE isbn = '978-0-375-41398-8'
 
 **Description:** 
 Write a CTAS query to create a new table that lists each member and the books they have issued but not returned within 30 days. The table should include:
-    The number of overdue books.
-    The total fines, with each day's fine calculated at $0.50.
-    The number of books issued by each member.
-    The resulting table should show:
-    Member ID
-    Number of overdue books
-    Total fines
-'''sql
+The number of overdue books.
+The total fines, with each day's fine calculated at $0.50.
+The number of books issued by each member.
+The resulting table should show:
+Member ID
+Number of overdue books
+Total fines
+    
+```sql
 SELECT mem.member_id, 
 	mem.member_name, 
 	COUNT(member_id) AS books_overdue,
@@ -500,7 +501,7 @@ JOIN books AS b
 WHERE return_date IS NULL 
 	AND CURRENT_DATE - (iss.issued_date + INTERVAL '30 Days')::DATE > 0
 GROUP BY 1,2
-'''
+```
 
 
 ## Reports
