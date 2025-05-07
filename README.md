@@ -518,7 +518,7 @@ This project demonstrates the application of SQL skills in creating and managing
 
 1. **Clone the Repository**: Clone this repository to your local machine.
    ```sh
-   git clone https://github.com/najirh/Library-System-Management---P2.git
+   git clone https://github.com/Priyanshiishah/Library_System_Management.git
    ```
 2. **Set Up the Database**: Execute the SQL scripts in the `database_setup.sql` file to create and populate the database.
 3. **Run the Queries**: Use the SQL queries in the `analysis_queries.sql` file to perform the analysis.
