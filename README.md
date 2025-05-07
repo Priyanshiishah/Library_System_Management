@@ -116,7 +116,7 @@ CREATE TABLE return_status
 - **Update**: Updated records in the `employees` table.
 - **Delete**: Removed records from the `members` table as needed.
 
-**Task 1. Create a New Book Record**
+**1. Create a New Book Record**
 -- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
 
 ```sql
@@ -124,7 +124,7 @@ INSERT INTO books(isbn, book_title, category, rental_price, status, author, publ
 VALUES('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
 SELECT * FROM books;
 ```
-**Task 2: Update an Existing Member's Address**
+**2. Update an Existing Member's Address**
 
 ```sql
 UPDATE members
@@ -132,7 +132,7 @@ SET member_address = '125 Oak St'
 WHERE member_id = 'C103';
 ```
 
-**Task 3: Delete a Record from the Issued Status Table**
+**3. Delete a Record from the Issued Status Table**
 -- Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
 
 ```sql
@@ -140,7 +140,7 @@ DELETE FROM issued_status
 WHERE   issued_id =   'IS121';
 ```
 
-**Task 4: Retrieve All Books Issued by a Specific Employee**
+**4. Retrieve All Books Issued by a Specific Employee**
 -- Objective: Select all books issued by the employee with emp_id = 'E101'.
 ```sql
 SELECT * FROM issued_status
@@ -148,7 +148,7 @@ WHERE issued_emp_id = 'E101'
 ```
 
 
-**Task 5: List Members Who Have Issued More Than One Book**
+**5. List Members Who Have Issued More Than One Book**
 -- Objective: Use GROUP BY to find members who have issued more than one book.
 
 ```sql
@@ -162,7 +162,7 @@ HAVING COUNT(*) > 1
 
 ### 3. CTAS (Create Table As Select)
 
-- **Task 6: Create Summary Tables**: Used CTAS to generate new tables based on query results - each book and total book_issued_cnt**
+**6. Create Summary Tables**: Used CTAS to generate new tables based on query results - each book and total book_issued_cnt**
 
 ```sql
 CREATE TABLE book_issued_cnt AS
@@ -178,14 +178,14 @@ GROUP BY b.isbn, b.book_title;
 
 The following SQL queries were used to address specific questions:
 
-Task 7. **Retrieve All Books in a Specific Category**:
+**7. Retrieve All Books in a Specific Category**
 
 ```sql
 SELECT * FROM books
 WHERE category = 'Classic';
 ```
 
-8. **Task 8: Find Total Rental Income by Category**:
+**8. Task 8: Find Total Rental Income by Category**
 
 ```sql
 SELECT 
@@ -200,13 +200,13 @@ ON b.isbn = ist.issued_book_isbn
 GROUP BY 1
 ```
 
-9. **List Members Who Registered in the Last 180 Days**:
+**9. List Members Who Registered in the Last 180 Days**
 ```sql
 SELECT * FROM members
 WHERE reg_date >= CURRENT_DATE - INTERVAL '180 days';
 ```
 
-10. **List Employees with Their Branch Manager's Name and their branch details**:
+**10. List Employees with Their Branch Manager's Name and their branch details**
 
 ```sql
 SELECT 
@@ -225,14 +225,14 @@ employees as e2
 ON e2.emp_id = b.manager_id
 ```
 
-Task 11. **Create a Table of Books with Rental Price Above a Certain Threshold**:
+**11. Create a Table of Books with Rental Price Above a Certain Threshold**
 ```sql
 CREATE TABLE expensive_books AS
 SELECT * FROM books
 WHERE rental_price > 7.00;
 ```
 
-Task 12: **Retrieve the List of Books Not Yet Returned**
+**12. Retrieve the List of Books Not Yet Returned**
 ```sql
 SELECT * FROM issued_status as ist
 LEFT JOIN
@@ -243,8 +243,8 @@ WHERE rs.return_id IS NULL;
 
 ## Advanced SQL Operations
 
-**Task 13: Identify Members with Overdue Books**  
-Write a query to identify members who have overdue books (assume a 30-day return period). Display the member's_id, member's name, book title, issue date, and days overdue.
+**13. Identify Members with Overdue Books**  
+Write a query to identify members with overdue books (assuming a 30-day return period). Display the member's_id, member's name, book title, issue date, and days overdue.
 
 ```sql
 SELECT 
@@ -272,7 +272,7 @@ ORDER BY 1
 ```
 
 
-**Task 14: Update Book Status on Return**  
+**14. Update Book Status on Return**  
 Write a query to update the status of books in the books table to "Yes" when they are returned (based on entries in the return_status table).
 
 
@@ -337,7 +337,7 @@ CALL add_return_records('RS148', 'IS140', 'Good');
 
 
 
-**Task 15: Branch Performance Report**  
+**15. Branch Performance Report**  
 Create a query that generates a performance report for each branch, showing the number of books issued, the number of books returned, and the total revenue generated from book rentals.
 
 ```sql
@@ -367,7 +367,7 @@ GROUP BY 1, 2;
 SELECT * FROM branch_reports;
 ```
 
-**Task 16: CTAS: Create a Table of Active Members**  
+**16. CTAS: Create a Table of Active Members**  
 Use the CREATE TABLE AS (CTAS) statement to create a new table active_members containing members who have issued at least one book in the last 2 months.
 
 ```sql
@@ -388,7 +388,7 @@ SELECT * FROM active_members;
 ```
 
 
-**Task 17: Find Employees with the Most Book Issues Processed**  
+**17. Find Employees with the Most Book Issues Processed**  
 Write a query to find the top 3 employees who have processed the most book issues. Display the employee name, number of books processed, and their branch.
 
 ```sql
@@ -406,11 +406,7 @@ ON e.branch_id = b.branch_id
 GROUP BY 1, 2
 ```
 
-**Task 18: Identify Members Issuing High-Risk Books**  
-Write a query to identify members who have issued books more than twice with the status "damaged" in the books table. Display the member name, book title, and the number of times they've issued damaged books.    
-
-
-**Task 19: Stored Procedure**
+**18. Stored Procedure**
 Objective:
 Create a stored procedure to manage the status of books in a library system.
 Description:
@@ -427,7 +423,7 @@ LANGUAGE plpgsql
 AS $$
 
 DECLARE
--- all the variabable
+-- all the variables
     v_status VARCHAR(10);
 
 BEGIN
@@ -459,7 +455,7 @@ BEGIN
 END;
 $$
 
--- Testing The function
+-- Testing the function
 SELECT * FROM books;
 -- "978-0-553-29698-2" -- yes
 -- "978-0-375-41398-8" -- no
@@ -475,7 +471,7 @@ WHERE isbn = '978-0-375-41398-8'
 
 
 
-**Task 20: Create Table As Select (CTAS)**
+**19. Create Table As Select (CTAS)**
 Objective: Create a CTAS (Create Table As Select) query to identify overdue books and calculate fines.
 
 Description: Write a CTAS query to create a new table that lists each member and the books they have issued but not returned within 30 days. The table should include:
@@ -486,7 +482,22 @@ Description: Write a CTAS query to create a new table that lists each member and
     Member ID
     Number of overdue books
     Total fines
-
+'''sql
+SELECT mem.member_id, 
+	mem.member_name, 
+	COUNT(member_id) AS books_overdue,
+	SUM((CURRENT_DATE - (iss.issued_date + INTERVAL '30 Days')::DATE) * 0.50) AS total_fines	
+FROM members AS mem
+JOIN issued_status AS iss
+	ON iss.issued_member_id = mem.member_id
+LEFT JOIN return_status AS ret
+	ON ret.issued_id = iss.issued_id
+JOIN books AS b
+	ON b.isbn = iss.issued_book_isbn
+WHERE return_date IS NULL 
+	AND CURRENT_DATE - (iss.issued_date + INTERVAL '30 Days')::DATE > 0
+GROUP BY 1,2
+'''
 
 
 ## Reports
@@ -497,7 +508,7 @@ Description: Write a CTAS query to create a new table that lists each member and
 
 ## Conclusion
 
-This project demonstrates the application of SQL skills in creating and managing a library management system. It includes database setup, data manipulation, and advanced querying, providing a solid foundation for data management and analysis.
+This project demonstrates the application of SQL skills in creating and managing a library management system. It includes database setup, data manipulation, and advanced querying, providing a solid data management and analysis foundation.
 
 ## How to Use
 
@@ -505,18 +516,6 @@ This project demonstrates the application of SQL skills in creating and managing
    ```sh
    git clone https://github.com/najirh/Library-System-Management---P2.git
    ```
-
 2. **Set Up the Database**: Execute the SQL scripts in the `database_setup.sql` file to create and populate the database.
 3. **Run the Queries**: Use the SQL queries in the `analysis_queries.sql` file to perform the analysis.
 4. **Explore and Modify**: Customize the queries as needed to explore different aspects of the data or answer additional questions.
-
-## Author - Zero Analyst
-
-This project showcases SQL skills essential for database management and analysis. For more content on SQL and data analysis, connect with me through the following channels:
-
-- **YouTube**: [Subscribe to my channel for tutorials and insights](https://www.youtube.com/@zero_analyst)
-- **Instagram**: [Follow me for daily tips and updates](https://www.instagram.com/zero_analyst/)
-- **LinkedIn**: [Connect with me professionally](https://www.linkedin.com/in/najirr)
-- **Discord**: [Join our community for learning and collaboration](https://discord.gg/36h5f2Z5PK)
-
-Thank you for your interest in this project!
